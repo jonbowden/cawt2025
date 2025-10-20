@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CA WT Assignments</title>
+
+  <!-- Open Graph Metadata for WhatsApp / Social Preview -->
+  <meta property="og:title" content="CA WT Assignments" />
+  <meta property="og:description" content="Circuit Assembly Watchtower Assignments (secure access)" />
+  <meta property="og:image" content="https://yourusername.github.io/images/icon.png" />
+  <meta property="og:url" content="https://yourusername.github.io/ca-wt/" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f6fa;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: #fff;
+      padding: 40px 50px;
+      border-radius: 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 360px;
+    }
+    img {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 20px;
+    }
+    h2 {
+      margin-top: 0;
+      color: #2f3640;
+    }
+    input {
+      padding: 10px;
+      font-size: 16px;
+      width: 80%;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #4b7bec;
+      border: none;
+      border-radius: 6px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #3867d6;
+    }
+    #msg {
+      margin-top: 12px;
+      color: #e84118;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="images/icon.png" alt="CA WT Logo" />
+    <h2>Enter Access Code</h2>
+    <input type="password" id="pwd" placeholder="Password" />
+    <br />
+    <button onclick="check()">Access</button>
+    <p id="msg"></p>
+  </div>
+
+  <script>
+    // Compute SHA-256 of a string → hex
+    async function sha256(str) {
+      const enc = new TextEncoder().encode(str);
+      const buf = await crypto.subtle.digest('SHA-256', enc);
+      return Array.from(new Uint8Array(buf))
+                  .map(b => b.toString(16).padStart(2, '0'))
+                  .join('');
+    }
+
+    async function check() {
+      const pwd = document.getElementById('pwd').value.trim();
+      const hash = await sha256(pwd);
+
+      // SHA-256 hash of password
+      const expected = "fb4a379d44cab4220bc5596ffa1f8eb9b169ba098d2c98b20d110881c92b9299";
+
+      if (hash === expected) {
+        window.location.href = "https://docs.google.com/spreadsheets/d/1n5jnVOfLMsKdTl-ya84bDVMKKOCmAIWr2EgMDeLKKAM/edit?usp=sharing";
+      } else {
+        document.getElementById('msg').textContent = "Incorrect password.";
+      }
+    }
+  </script>
+</body>
+</html>
